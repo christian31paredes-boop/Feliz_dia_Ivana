@@ -1,0 +1,2097 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz Día de las Flores Amarillas 🌻💛 | Para Ivana</title>
+  <meta name="description"
+    content="Un detalle sincero en el Día de las Flores Amarillas con música, ramo interactivo y una dedicatoria especial." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       VARIABLES Y RESET
+       ========================================================================== */
+    :root {
+      --primary-gold: #ffc300;
+      --secondary-gold: #ffd60a;
+      --deep-amber: #e09f3e;
+      --sun-yellow: #ffb703;
+      --glow-gold: rgba(255, 214, 10, 0.45);
+      --bg-dark-1: #090814;
+      --bg-dark-2: #140d28;
+      --bg-dark-3: #22143b;
+      --leaf-green: #2a9d8f;
+      --text-light: #fffdf2;
+      --text-muted: #e2d9c8;
+      --glass-bg: rgba(255, 255, 255, 0.07);
+      --glass-border: rgba(255, 215, 0, 0.28);
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+      --font-display: 'Playfair Display', serif;
+      --font-script: 'Dancing Script', cursive;
+      --font-sans: 'Outfit', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: radial-gradient(circle at 50% 15%, #180e32 0%, #0c0818 60%, #040208 100%);
+      color: var(--text-light);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ==========================================================================
+       CANVAS DE PÉTALOS Y PARTÍCULAS
+       ========================================================================== */
+    #petals-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ==========================================================================
+       PANTALLA DE BIENVENIDA / INGRESO ("HAZ CLIC AQUÍ")
+       ========================================================================== */
+    #welcome-curtain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #1b1233 0%, #0c0818 60%, #05030a 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 1.2s cubic-bezier(0.65, 0, 0.35, 1), visibility 1.2s ease, transform 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+      padding: 24px;
+      text-align: center;
+    }
+
+    #welcome-curtain.hidden {
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(1.1);
+      pointer-events: none;
+    }
+
+    .welcome-ambient-glow {
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 195, 0, 0.3) 0%, rgba(255, 183, 3, 0.08) 50%, transparent 75%);
+      filter: blur(45px);
+      animation: pulseGlow 4s infinite alternate ease-in-out;
+      pointer-events: none;
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        transform: scale(0.85);
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(1.25);
+        opacity: 0.9;
+      }
+    }
+
+    .gift-box-wrapper {
+      position: relative;
+      margin-bottom: 30px;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .floating-gift-icon {
+      width: 140px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 214, 10, 0.25) 0%, rgba(255, 183, 3, 0.06) 70%);
+      border: 2px solid rgba(255, 214, 10, 0.45);
+      box-shadow: 0 0 45px rgba(255, 195, 0, 0.4), inset 0 0 25px rgba(255, 214, 10, 0.25);
+      animation: floatGentle 3.5s ease-in-out infinite alternate;
+      position: relative;
+    }
+
+    .floating-gift-icon svg {
+      width: 80px;
+      height: 80px;
+      filter: drop-shadow(0 6px 12px rgba(255, 183, 3, 0.5));
+      animation: heartBeat 2s infinite ease-in-out;
+    }
+
+    @keyframes floatGentle {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      100% {
+        transform: translateY(-16px) rotate(4deg);
+      }
+    }
+
+    @keyframes heartBeat {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.08);
+      }
+    }
+
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 22px;
+      border-radius: 50px;
+      background: rgba(255, 214, 10, 0.12);
+      border: 1px solid rgba(255, 214, 10, 0.35);
+      font-size: 0.95rem;
+      color: var(--secondary-gold);
+      margin-bottom: 18px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+    }
+
+    .welcome-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #fff 20%, #ffe382 60%, #ffb703 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(255, 183, 3, 0.35);
+    }
+
+    .welcome-sub {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 35px;
+      line-height: 1.6;
+    }
+
+    .welcome-sub span {
+      color: var(--secondary-gold);
+      font-weight: 600;
+    }
+
+    /* Botón animado "Haz Clic Aquí" */
+    .btn-enter {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 18px 44px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      color: #1a0f00;
+      background: linear-gradient(135deg, #ffe169 0%, #ffb703 50%, #fb8500 100%);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(255, 183, 3, 0.5), 0 0 0 4px rgba(255, 214, 10, 0.25);
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .btn-enter::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+      animation: shimmerBtn 2.6s infinite;
+    }
+
+    @keyframes shimmerBtn {
+      0% {
+        left: -100%;
+      }
+
+      50%,
+      100% {
+        left: 100%;
+      }
+    }
+
+    .btn-enter:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(255, 183, 3, 0.7), 0 0 0 8px rgba(255, 214, 10, 0.35);
+    }
+
+    .btn-enter:active {
+      transform: translateY(2px) scale(0.98);
+    }
+
+    .pulse-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50px;
+      border: 2px solid var(--secondary-gold);
+      animation: pulseRipples 2.2s infinite ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes pulseRipples {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: scale(1.4, 1.7);
+        opacity: 0;
+      }
+    }
+
+    /* ==========================================================================
+       CONTENIDO PRINCIPAL (EL JARDÍN DE FLORES)
+       ========================================================================== */
+    .app-container {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px 80px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Header y Dedicatoria */
+    .header-section {
+      text-align: center;
+      margin-bottom: 25px;
+      max-width: 780px;
+    }
+
+    .date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 22px;
+      border-radius: 30px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      font-size: 0.95rem;
+      color: var(--secondary-gold);
+      margin-bottom: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .main-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 10%, #fff1b8 40%, #ffd000 80%, #ff9e00 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 18px rgba(255, 195, 0, 0.3));
+    }
+
+    .recipient-tag {
+      display: inline-block;
+      font-family: var(--font-script);
+      font-size: clamp(2rem, 4.5vw, 2.8rem);
+      color: var(--secondary-gold);
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(255, 214, 10, 0.4);
+    }
+
+    .intro-quote {
+      font-size: clamp(1rem, 2vw, 1.18rem);
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0 auto 20px auto;
+      max-width: 640px;
+    }
+
+    /* ==========================================================================
+       REPRODUCTOR DE MÚSICA ("FLORES AMARILLAS - FLORICIENTA")
+       ========================================================================== */
+    .player-dock {
+      position: sticky;
+      top: 15px;
+      z-index: 100;
+      margin-bottom: 25px;
+      width: 100%;
+      max-width: 480px;
+      transition: transform 0.3s ease;
+    }
+
+    .player-card {
+      background: rgba(20, 14, 38, 0.88);
+      border: 1px solid rgba(255, 214, 10, 0.35);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 60px;
+      padding: 10px 18px 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 200, 0, 0.15);
+    }
+
+    .vinyl-wrapper {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+    }
+
+    .vinyl-disc {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #ffb703 16%, #1a1528 17%, #000 40%, #1a1528 42%, #000 70%, #ffb703 72%, #000 75%);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: spinVinyl 5s linear infinite;
+      animation-play-state: paused;
+      border: 1px solid rgba(255, 214, 10, 0.4);
+    }
+
+    .vinyl-disc.playing {
+      animation-play-state: running;
+    }
+
+    .vinyl-center-flower {
+      font-size: 1.1rem;
+      filter: drop-shadow(0 0 4px #ffd700);
+    }
+
+    @keyframes spinVinyl {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .song-details {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .song-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .song-title span.badge {
+      background: rgba(255, 214, 10, 0.2);
+      color: var(--secondary-gold);
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .song-artist {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Ecualizador animado */
+    .equalizer-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2.5px;
+      height: 14px;
+    }
+
+    .eq-bar {
+      width: 3px;
+      background: var(--secondary-gold);
+      border-radius: 2px;
+      height: 4px;
+      transition: height 0.2s ease;
+    }
+
+    .equalizer-bars.playing .eq-bar:nth-child(1) {
+      animation: bounceEq 0.7s infinite alternate 0.1s;
+    }
+
+    .equalizer-bars.playing .eq-bar:nth-child(2) {
+      animation: bounceEq 0.5s infinite alternate 0.3s;
+    }
+
+    .equalizer-bars.playing .eq-bar:nth-child(3) {
+      animation: bounceEq 0.8s infinite alternate 0.05s;
+    }
+
+    .equalizer-bars.playing .eq-bar:nth-child(4) {
+      animation: bounceEq 0.6s infinite alternate 0.2s;
+    }
+
+    @keyframes bounceEq {
+      0% {
+        height: 3px;
+      }
+
+      100% {
+        height: 14px;
+      }
+    }
+
+    .player-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-play-pause {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffd60a 0%, #ff9e00 100%);
+      border: none;
+      color: #1a0f00;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 183, 3, 0.4);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .btn-play-pause:hover {
+      transform: scale(1.1);
+    }
+
+    .btn-play-pause:active {
+      transform: scale(0.95);
+    }
+
+    .btn-play-pause svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* Contenedor del reproductor de YouTube oficial */
+    #yt-audio-container {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0.01;
+      pointer-events: none;
+      overflow: hidden;
+      top: -9999px;
+    }
+
+    /* ==========================================================================
+       ESCENARIO DEL RAMO DE FLORES AMARILLAS (INTERACTIVO)
+       ========================================================================== */
+    .bouquet-stage {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px auto 30px auto;
+    }
+
+    .bouquet-glow-background {
+      position: absolute;
+      width: 460px;
+      height: 460px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 200, 0, 0.22) 0%, rgba(255, 170, 0, 0.08) 55%, transparent 75%);
+      filter: blur(50px);
+      pointer-events: none;
+      animation: pulseGlow 5s infinite alternate ease-in-out;
+    }
+
+    .bouquet-container {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.6));
+      animation: bouquetFloat 6s ease-in-out infinite alternate;
+      transform-origin: center bottom;
+    }
+
+    @keyframes bouquetFloat {
+      0% {
+        transform: translateY(0px) rotate(-1deg);
+      }
+
+      100% {
+        transform: translateY(-12px) rotate(1.2deg);
+      }
+    }
+
+    /* Flores SVG interactivas */
+    .svg-flower-interactive {
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+      transform-origin: center center;
+    }
+
+    .svg-flower-interactive:hover {
+      transform: scale(1.12);
+      filter: drop-shadow(0 0 16px rgba(255, 220, 50, 0.95));
+    }
+
+    .svg-flower-interactive:active {
+      transform: scale(0.95);
+    }
+
+    /* Indicador interactivo "Toca una flor" */
+    .bouquet-hint-chip {
+      position: absolute;
+      bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border-radius: 30px;
+      background: rgba(18, 12, 34, 0.85);
+      border: 1px solid rgba(255, 214, 10, 0.45);
+      color: var(--secondary-gold);
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      animation: bounceHint 2.5s infinite;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    @keyframes bounceHint {
+
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateY(0);
+      }
+
+      40% {
+        transform: translateY(-8px);
+      }
+
+      60% {
+        transform: translateY(-4px);
+      }
+    }
+
+    /* Tarjeta flotante de cumplido al tocar flor */
+    #flower-message-bubble {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px) scale(0.85);
+      background: linear-gradient(135deg, rgba(28, 20, 52, 0.95) 0%, rgba(42, 28, 77, 0.95) 100%);
+      border: 1.5px solid var(--secondary-gold);
+      color: #fff;
+      padding: 16px 24px;
+      border-radius: 20px;
+      max-width: 360px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 214, 10, 0.35);
+      backdrop-filter: blur(16px);
+      z-index: 50;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    #flower-message-bubble.active {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .bubble-icon {
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .bubble-text {
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.45;
+      color: #fffde6;
+    }
+
+    /* ==========================================================================
+       BARRA DE ACCIONES (BOTONES PRINCIPALES)
+       ========================================================================== */
+    .actions-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+      max-width: 540px;
+      margin-bottom: 35px;
+    }
+
+    .btn-action-primary {
+      flex: 1 1 240px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px 28px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1a0f00;
+      background: linear-gradient(135deg, #ffd60a 0%, #ffb703 60%, #fb8500 100%);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(255, 183, 3, 0.45);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .btn-action-primary:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 12px 35px rgba(255, 183, 3, 0.65);
+    }
+
+    .btn-action-secondary {
+      flex: 1 1 200px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 24px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-light);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+    }
+
+    .btn-action-secondary:hover {
+      background: rgba(255, 214, 10, 0.15);
+      border-color: var(--secondary-gold);
+      color: var(--secondary-gold);
+      transform: translateY(-3px);
+    }
+
+    /* ==========================================================================
+       MODAL DE LA CARTA Y EL POEMA ESPECIAL
+       ========================================================================== */
+    .letter-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(8, 5, 18, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.45s ease;
+    }
+
+    .letter-modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .parchment-card {
+      position: relative;
+      width: 100%;
+      max-width: 580px;
+      max-height: 88vh;
+      overflow-y: auto;
+      background: linear-gradient(145deg, #fffdf2 0%, #faecd0 50%, #f7e2b8 100%);
+      color: #3b2812;
+      border-radius: 24px;
+      padding: clamp(28px, 5vw, 45px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 200, 0, 0.3);
+      border: 2px solid #e2c275;
+      transform: scale(0.85) rotate(-2deg);
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .letter-modal-overlay.open .parchment-card {
+      transform: scale(1) rotate(0deg);
+    }
+
+    .parchment-card::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px dashed rgba(179, 131, 40, 0.4);
+      border-radius: 16px;
+      pointer-events: none;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(90, 60, 20, 0.1);
+      border: none;
+      color: #5a3c14;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .modal-close-btn:hover {
+      background: #e2a829;
+      color: #fff;
+    }
+
+    .letter-stamp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .wax-seal {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffd60a 0%, #e09f3e 70%, #9e6400 100%);
+      box-shadow: 0 6px 15px rgba(158, 100, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    .letter-header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .letter-salutation {
+      font-family: var(--font-script);
+      font-size: clamp(2.2rem, 5vw, 3rem);
+      color: #945800;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .letter-date {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #7d5926;
+      font-weight: 600;
+    }
+
+    .poem-body {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 2.3vw, 1.2rem);
+      line-height: 1.8;
+      text-align: center;
+      color: #3f2a14;
+      margin-bottom: 30px;
+      padding: 0 10px;
+    }
+
+    .poem-stanza {
+      margin-bottom: 20px;
+    }
+
+    .poem-stanza:last-child {
+      margin-bottom: 0;
+      font-style: italic;
+      font-weight: 600;
+      color: #8c5300;
+    }
+
+    .letter-footer {
+      text-align: center;
+      border-top: 1px solid rgba(179, 131, 40, 0.25);
+      padding-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .letter-signature {
+      font-family: var(--font-script);
+      font-size: 2rem;
+      color: #945800;
+    }
+
+    .btn-letter-heart {
+      background: linear-gradient(135deg, #e09f3e 0%, #b87314 100%);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 18px rgba(184, 115, 20, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-letter-heart:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 22px rgba(184, 115, 20, 0.5);
+    }
+
+    /* ==========================================================================
+       EFECTOS FLOTANTES DE DESTELO / CHIMES
+       ========================================================================== */
+    .floating-toast {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%) translateY(50px);
+      background: rgba(20, 14, 38, 0.9);
+      border: 1px solid var(--secondary-gold);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .floating-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE DESIGN (100% ADAPTABLE A CELULARES, TABLETS, LAPTOPS Y MONITORES)
+       ========================================================================== */
+
+    /* Pantalla de bienvenida adaptable */
+    #welcome-curtain {
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      overflow-y: auto;
+      padding: clamp(20px, 4vh, 40px) 16px;
+    }
+
+    /* Tablets y Pantallas Medianas (<= 992px) */
+    @media (max-width: 992px) {
+      .app-container {
+        padding: 24px 18px 70px 18px;
+      }
+      .bouquet-container {
+        max-width: 440px;
+      }
+    }
+
+    /* Celulares y Dispositivos Móviles (<= 768px) */
+    @media (max-width: 768px) {
+      .app-container {
+        padding: 16px 14px 60px 14px;
+        width: 100%;
+      }
+
+      .floating-gift-icon {
+        width: 120px;
+        height: 120px;
+      }
+
+      .floating-gift-icon svg {
+        width: 68px;
+        height: 68px;
+      }
+
+      .welcome-ambient-glow {
+        width: 300px;
+        height: 300px;
+      }
+
+      .welcome-title {
+        font-size: clamp(1.8rem, 6.5vw, 2.6rem);
+      }
+
+      .welcome-sub {
+        font-size: clamp(0.95rem, 3.5vw, 1.15rem);
+        margin-bottom: 25px;
+        padding: 0 8px;
+      }
+
+      .btn-enter {
+        padding: 16px 28px;
+        font-size: 1.05rem;
+        width: 100%;
+        max-width: 340px;
+      }
+
+      /* Reproductor compacto en celular */
+      .player-dock {
+        top: 10px;
+        margin-bottom: 18px;
+        max-width: 100%;
+        padding: 0 4px;
+      }
+
+      .player-card {
+        padding: 8px 14px;
+        border-radius: 40px;
+        gap: 10px;
+      }
+
+      .vinyl-wrapper {
+        width: 44px;
+        height: 44px;
+      }
+
+      .song-title {
+        font-size: 0.88rem;
+      }
+
+      .song-artist {
+        font-size: 0.75rem;
+      }
+
+      .btn-play-pause {
+        width: 40px;
+        height: 40px;
+      }
+
+      /* Ramo escalable para celular */
+      .bouquet-stage {
+        margin: 5px auto 18px auto;
+        width: 100%;
+      }
+
+      .bouquet-container {
+        max-width: min(90vw, 360px);
+      }
+
+      .bouquet-glow-background {
+        width: 300px;
+        height: 300px;
+      }
+
+      .bouquet-hint-chip {
+        bottom: 8px;
+        font-size: 0.82rem;
+        padding: 6px 16px;
+      }
+
+      #flower-message-bubble {
+        width: 90%;
+        max-width: 320px;
+        padding: 12px 18px;
+      }
+
+      /* Botones de acción apilados y cómodos de pulsar */
+      .actions-grid {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+      }
+
+      .btn-action-primary,
+      .btn-action-secondary {
+        width: 100%;
+        flex: 1 1 100%;
+        padding: 14px 20px;
+        font-size: 1rem;
+      }
+
+      /* Modal de la Carta Adaptado a Móviles */
+      .letter-modal-overlay {
+        padding: 12px;
+      }
+
+      .parchment-card {
+        padding: 26px 18px 24px 18px;
+        border-radius: 18px;
+        max-height: 90vh;
+      }
+
+      .letter-stamp {
+        margin-bottom: 14px;
+      }
+
+      .wax-seal {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+
+      .letter-salutation {
+        font-size: clamp(2rem, 7vw, 2.6rem);
+        margin-bottom: 4px;
+      }
+
+      .letter-date {
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+      }
+
+      .poem-body {
+        font-size: clamp(0.95rem, 3.6vw, 1.1rem);
+        line-height: 1.65;
+        margin-bottom: 20px;
+        padding: 0;
+      }
+
+      .poem-stanza {
+        margin-bottom: 14px;
+      }
+
+      .letter-signature {
+        font-size: 1.7rem;
+      }
+
+      .btn-letter-heart {
+        padding: 10px 22px;
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Celulares muy compactos (<= 380px) */
+    @media (max-width: 380px) {
+      .welcome-title {
+        font-size: 1.6rem;
+      }
+
+      .btn-enter {
+        padding: 14px 20px;
+        font-size: 0.95rem;
+      }
+
+      .recipient-tag {
+        font-size: 1.7rem;
+      }
+
+      .bouquet-container {
+        max-width: 280px;
+      }
+
+      .player-card {
+        padding: 6px 10px;
+      }
+
+      .song-title span.badge {
+        display: none;
+      }
+    }
+
+    /* Dispositivos en modo horizontal con poca altura (Laptops pequeñas o celulares rotados) */
+    @media (max-height: 580px) {
+      #welcome-curtain {
+        justify-content: flex-start;
+        padding-top: 25px;
+      }
+
+      .gift-box-wrapper {
+        margin-bottom: 12px;
+      }
+
+      .floating-gift-icon {
+        width: 80px;
+        height: 80px;
+      }
+
+      .floating-gift-icon svg {
+        width: 44px;
+        height: 44px;
+      }
+
+      .bouquet-container {
+        max-width: 270px;
+      }
+
+      .parchment-card {
+        max-height: 94vh;
+        padding-top: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Lienzo interactivo de pétalos y partículas doradas -->
+  <canvas id="petals-canvas"></canvas>
+
+  <!-- ==========================================================================
+       1. PANTALLA DE INGRESO ("HAZ CLIC AQUÍ")
+       ========================================================================== -->
+  <div id="welcome-curtain">
+    <div class="welcome-ambient-glow"></div>
+
+    <div class="welcome-badge">
+      <span>✨</span> 21 de Septiembre <span>✨</span>
+    </div>
+
+    <!-- Icono de regalo animado -->
+    <div class="gift-box-wrapper" id="gift-box" title="Toca para abrir">
+      <div class="floating-gift-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="url(#goldGradient)" stroke-width="1.8" stroke-linecap="round"
+          stroke-linejoin="round">
+          <defs>
+            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffd60a" />
+              <stop offset="100%" stop-color="#ff9e00" />
+            </linearGradient>
+          </defs>
+          <polyline points="20 12 20 22 4 22 4 12"></polyline>
+          <rect x="2" y="7" width="20" height="5"></rect>
+          <line x1="12" y1="22" x2="12" y2="7"></line>
+          <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+          <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+        </svg>
+      </div>
+    </div>
+
+    <h1 class="welcome-title">Flores Amarillas Para Ivana</h1>
+    <p class="welcome-sub">
+      Una sorpresa especial porque hoy <span>no podía dejarte sin tus flores amarillas</span>...
+    </p>
+
+    <!-- Botón principal de ingreso -->
+    <button class="btn-enter" id="btn-enter">
+      <div class="pulse-ring"></div>
+      <span>✨ ¡Haz clic aquí para abrir! ✨</span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M12 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- ==========================================================================
+       2. CONTENEDOR PRINCIPAL
+       ========================================================================== -->
+  <main class="app-container">
+
+    <!-- Encabezado con dedicatoria -->
+    <section class="header-section">
+      <div class="date-badge">
+        <span>🌻</span> Día de las Flores Amarillas <span>💛</span>
+      </div>
+
+      <h1 class="main-title">Feliz Día de las Flores Amarillas</h1>
+
+      <div class="recipient-tag">
+        Para Ivana 💛
+      </div>
+
+      <p class="intro-quote">
+        "Dicen que quien te regala flores amarillas te desea alegría, luz y una bonita sonrisa..."
+      </p>
+    </section>
+
+    <!-- Reproductor flotante con Floricienta -->
+    <div class="player-dock">
+      <div class="player-card">
+        <div class="vinyl-wrapper">
+          <div class="vinyl-disc" id="vinyl-disc">
+            <span class="vinyl-center-flower">🌻</span>
+          </div>
+        </div>
+
+        <div class="song-details">
+          <div class="song-title">
+            Flores Amarillas
+            <span class="badge">OFICIAL</span>
+          </div>
+          <div class="song-artist">
+            <span>Floricienta</span>
+            <div class="equalizer-bars" id="equalizer-bars">
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="player-controls">
+          <!-- Botón Play / Pause -->
+          <button class="btn-play-pause" id="btn-play-pause" title="Reproducir / Pausar">
+            <svg id="icon-play" viewBox="0 0 24 24">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <svg id="icon-pause" viewBox="0 0 24 24" style="display: none;">
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Escenario del Ramo de Flores Amarillas -->
+    <section class="bouquet-stage">
+      <div class="bouquet-glow-background"></div>
+
+      <!-- Tarjeta emergente al tocar flores -->
+      <div id="flower-message-bubble">
+        <span class="bubble-icon">✨</span>
+        <div class="bubble-text" id="bubble-content">¡Has florecido un lindo recuerdo!</div>
+      </div>
+
+      <!-- SVG artístico y detallado del Ramo de Flores Amarillas -->
+      <div class="bouquet-container">
+        <svg viewBox="0 0 500 580" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Gradientes de pétalos amarillos y dorados -->
+            <radialGradient id="sunPetalGrad" cx="30%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#fff8cc" />
+              <stop offset="35%" stop-color="#ffd500" />
+              <stop offset="80%" stop-color="#ffaa00" />
+              <stop offset="100%" stop-color="#e67e00" />
+            </radialGradient>
+
+            <radialGradient id="roseYellowGrad" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#fffde0" />
+              <stop offset="40%" stop-color="#ffea75" />
+              <stop offset="75%" stop-color="#ffc300" />
+              <stop offset="100%" stop-color="#e68a00" />
+            </radialGradient>
+
+            <!-- Gradiente del centro de girasol -->
+            <radialGradient id="sunCoreGrad" cx="40%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#6f4e24" />
+              <stop offset="50%" stop-color="#4a3112" />
+              <stop offset="85%" stop-color="#2a1a08" />
+              <stop offset="100%" stop-color="#190e04" />
+            </radialGradient>
+
+            <!-- Gradiente de hojas verdes -->
+            <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#52b788" />
+              <stop offset="60%" stop-color="#2d6a4f" />
+              <stop offset="100%" stop-color="#1b4332" />
+            </linearGradient>
+
+            <linearGradient id="leafLightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#74c69d" />
+              <stop offset="70%" stop-color="#40916c" />
+              <stop offset="100%" stop-color="#2d6a4f" />
+            </linearGradient>
+
+            <!-- Gradiente de papel kraft -->
+            <linearGradient id="wrapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ebd5b3" />
+              <stop offset="40%" stop-color="#dfbe90" />
+              <stop offset="85%" stop-color="#c49b66" />
+              <stop offset="100%" stop-color="#a47a46" />
+            </linearGradient>
+
+            <!-- Gradiente de cinta de lazo dorada -->
+            <linearGradient id="ribbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fff275" />
+              <stop offset="35%" stop-color="#ffd000" />
+              <stop offset="75%" stop-color="#e09f3e" />
+              <stop offset="100%" stop-color="#b07d2b" />
+            </linearGradient>
+
+            <!-- Filtro de sombra suave -->
+            <filter id="shadowFilter" x="-15%" y="-15%" width="130%" height="130%">
+              <feDropShadow dx="2" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.35" />
+            </filter>
+          </defs>
+
+          <!-- ==================== TALLOS Y FOLLAJE ==================== -->
+          <g id="stems" stroke="#2d6a4f" stroke-width="7" stroke-linecap="round">
+            <path d="M 230 460 Q 240 360 250 240" />
+            <path d="M 245 460 Q 220 370 170 260" />
+            <path d="M 260 460 Q 275 360 330 250" />
+            <path d="M 235 460 Q 190 350 120 280" />
+            <path d="M 265 460 Q 300 370 380 290" />
+          </g>
+
+          <!-- Hojas verdes frondosas del fondo -->
+          <g id="background-leaves">
+            <path d="M 120 290 Q 60 250 80 190 Q 140 210 160 270 Z" fill="url(#leafGrad)" filter="url(#shadowFilter)" />
+            <path d="M 120 290 Q 95 240 80 190" stroke="#74c69d" stroke-width="2" fill="none" opacity="0.6" />
+
+            <path d="M 370 300 Q 440 260 420 200 Q 360 220 330 280 Z" fill="url(#leafGrad)"
+              filter="url(#shadowFilter)" />
+            <path d="M 370 300 Q 400 250 420 200" stroke="#74c69d" stroke-width="2" fill="none" opacity="0.6" />
+
+            <path d="M 200 200 Q 160 110 210 80 Q 250 130 220 210 Z" fill="url(#leafLightGrad)" />
+            <path d="M 300 210 Q 350 120 300 90 Q 260 140 280 220 Z" fill="url(#leafLightGrad)" />
+          </g>
+
+          <!-- ==================== ENVOLTORIO DEL RAMO (PAPEL KRAFT) ==================== -->
+          <g id="wrapper-back">
+            <path d="M 170 340 L 250 560 L 330 340 Q 250 360 170 340 Z" fill="#916a3a" opacity="0.6" />
+          </g>
+
+          <!-- ==================== FLORES INTERACTIVAS ==================== -->
+
+          <!-- FLOR 1: Margarita Dorada Superior Izquierda -->
+          <g class="svg-flower-interactive"
+            data-message="🌼 'Aunque haya pasado un tiempo en silencio, me dio mucho gusto haberte conocido.'">
+            <g transform="translate(140, 160)">
+              <circle cx="0" cy="-30" r="12" fill="url(#sunPetalGrad)" />
+              <circle cx="21" cy="-21" r="12" fill="url(#sunPetalGrad)" />
+              <circle cx="30" cy="0" r="12" fill="url(#sunPetalGrad)" />
+              <circle cx="21" cy="21" r="12" fill="url(#sunPetalGrad)" />
+              <circle cx="0" cy="30" r="12" fill="url(#sunPetalGrad)" />
+              <circle cx="-21" cy="21" r="12" fill="url(#sunPetalGrad)" />
+              <circle cx="-30" cy="0" r="12" fill="url(#sunPetalGrad)" />
+              <circle cx="-21" cy="-21" r="12" fill="url(#sunPetalGrad)" />
+              <circle cx="0" cy="0" r="14" fill="url(#sunCoreGrad)" />
+              <circle cx="0" cy="0" r="11" fill="none" stroke="#e09f3e" stroke-dasharray="2 3" stroke-width="2" />
+            </g>
+          </g>
+
+          <!-- FLOR 2: Rosa Amarilla Superior Derecha -->
+          <g class="svg-flower-interactive"
+            data-message="✨ 'Hoy es un buen día para desearte momentos llenos de luz y alegría.'">
+            <g transform="translate(360, 170)">
+              <path d="M -35 0 C -35 -35 35 -35 35 0 C 35 35 -35 35 -35 0 Z" fill="url(#roseYellowGrad)" />
+              <path d="M -28 -10 C -28 -38 28 -38 28 -10 C 28 25 -28 25 -28 -10 Z" fill="#ffd000" />
+              <path d="M -20 -5 C -20 -25 20 -25 20 -5 C 20 18 -20 18 -20 -5 Z" fill="#ffb703" />
+              <path d="M -10 0 C -10 -15 10 -15 10 0 C 10 10 -10 10 -10 0 Z" fill="#e09f3e" />
+              <circle cx="0" cy="0" r="5" fill="#ffd60a" />
+            </g>
+          </g>
+
+          <!-- FLOR 3: Girasol Secundario Izquierdo -->
+          <g class="svg-flower-interactive"
+            data-message="🌻 'Tienes una vibra muy agradable que deja un bonito recuerdo.'">
+            <g transform="translate(160, 270)">
+              <g fill="url(#sunPetalGrad)">
+                <ellipse cx="0" cy="-48" rx="13" ry="24" transform="rotate(0)" />
+                <ellipse cx="0" cy="-48" rx="13" ry="24" transform="rotate(30)" />
+                <ellipse cx="0" cy="-48" rx="13" ry="24" transform="rotate(60)" />
+                <ellipse cx="0" cy="-48" rx="13" ry="24" transform="rotate(90)" />
+                <ellipse cx="0" cy="-48" rx="13" ry="24" transform="rotate(120)" />
+                <ellipse cx="0" cy="-48" rx="13" ry="24" transform="rotate(150)" />
+                <ellipse cx="0" cy="-48" rx="13" ry="24" transform="rotate(180)" />
+                <ellipse cx="0" cy="-48" rx="13" ry="24" transform="rotate(210)" />
+                <ellipse cx="0" cy="-48" rx="13" ry="24" transform="rotate(240)" />
+                <ellipse cx="0" cy="-48" rx="13" ry="24" transform="rotate(270)" />
+                <ellipse cx="0" cy="-48" rx="13" ry="24" transform="rotate(300)" />
+                <ellipse cx="0" cy="-48" rx="13" ry="24" transform="rotate(330)" />
+              </g>
+              <g fill="#ffe066" transform="rotate(15)">
+                <ellipse cx="0" cy="-44" rx="11" ry="20" transform="rotate(0)" />
+                <ellipse cx="0" cy="-44" rx="11" ry="20" transform="rotate(45)" />
+                <ellipse cx="0" cy="-44" rx="11" ry="20" transform="rotate(90)" />
+                <ellipse cx="0" cy="-44" rx="11" ry="20" transform="rotate(135)" />
+                <ellipse cx="0" cy="-44" rx="11" ry="20" transform="rotate(180)" />
+                <ellipse cx="0" cy="-44" rx="11" ry="20" transform="rotate(225)" />
+                <ellipse cx="0" cy="-44" rx="11" ry="20" transform="rotate(270)" />
+                <ellipse cx="0" cy="-44" rx="11" ry="20" transform="rotate(315)" />
+              </g>
+              <circle cx="0" cy="0" r="28" fill="url(#sunCoreGrad)" />
+              <circle cx="0" cy="0" r="23" fill="none" stroke="#ffd166" stroke-dasharray="2 3" stroke-width="1.8"
+                opacity="0.7" />
+              <circle cx="0" cy="0" r="14" fill="none" stroke="#e09f3e" stroke-dasharray="1 2.5" stroke-width="1.5"
+                opacity="0.6" />
+            </g>
+          </g>
+
+          <!-- FLOR 4: Rosa Dorada Lateral Derecha -->
+          <g class="svg-flower-interactive" data-message="💛 'Te deseo siempre lo mejor y que disfrutes mucho tu día.'">
+            <g transform="translate(340, 280)">
+              <g fill="url(#sunPetalGrad)">
+                <ellipse cx="0" cy="-42" rx="12" ry="22" transform="rotate(15)" />
+                <ellipse cx="0" cy="-42" rx="12" ry="22" transform="rotate(60)" />
+                <ellipse cx="0" cy="-42" rx="12" ry="22" transform="rotate(105)" />
+                <ellipse cx="0" cy="-42" rx="12" ry="22" transform="rotate(150)" />
+                <ellipse cx="0" cy="-42" rx="12" ry="22" transform="rotate(195)" />
+                <ellipse cx="0" cy="-42" rx="12" ry="22" transform="rotate(240)" />
+                <ellipse cx="0" cy="-42" rx="12" ry="22" transform="rotate(285)" />
+                <ellipse cx="0" cy="-42" rx="12" ry="22" transform="rotate(330)" />
+              </g>
+              <circle cx="0" cy="0" r="24" fill="url(#sunCoreGrad)" />
+              <circle cx="0" cy="0" r="18" fill="none" stroke="#ffb703" stroke-dasharray="2 3" stroke-width="1.8" />
+            </g>
+          </g>
+
+          <!-- FLOR 5: EL GRAN GIRASOL CENTRAL (PROTAGONISTA) -->
+          <g class="svg-flower-interactive"
+            data-message="🌻 'Un detalle sincero y espontáneo, solo para sacarte una sonrisa hoy.'">
+            <g transform="translate(250, 200)">
+              <g fill="url(#sunPetalGrad)" filter="url(#shadowFilter)">
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(0)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(22.5)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(45)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(67.5)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(90)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(112.5)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(135)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(157.5)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(180)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(202.5)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(225)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(247.5)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(270)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(292.5)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(315)" />
+                <ellipse cx="0" cy="-65" rx="17" ry="34" transform="rotate(337.5)" />
+              </g>
+
+              <g fill="#ffe57f" transform="rotate(11.25)">
+                <ellipse cx="0" cy="-56" rx="14" ry="28" transform="rotate(0)" />
+                <ellipse cx="0" cy="-56" rx="14" ry="28" transform="rotate(45)" />
+                <ellipse cx="0" cy="-56" rx="14" ry="28" transform="rotate(90)" />
+                <ellipse cx="0" cy="-56" rx="14" ry="28" transform="rotate(135)" />
+                <ellipse cx="0" cy="-56" rx="14" ry="28" transform="rotate(180)" />
+                <ellipse cx="0" cy="-56" rx="14" ry="28" transform="rotate(225)" />
+                <ellipse cx="0" cy="-56" rx="14" ry="28" transform="rotate(270)" />
+                <ellipse cx="0" cy="-56" rx="14" ry="28" transform="rotate(315)" />
+              </g>
+
+              <!-- Centro majestuoso del girasol -->
+              <circle cx="0" cy="0" r="38" fill="url(#sunCoreGrad)" />
+              <circle cx="0" cy="0" r="33" fill="none" stroke="#ffd166" stroke-dasharray="3 4" stroke-width="2.5"
+                opacity="0.8" />
+              <circle cx="0" cy="0" r="25" fill="none" stroke="#ffb703" stroke-dasharray="2 3" stroke-width="2"
+                opacity="0.75" />
+              <circle cx="0" cy="0" r="16" fill="none" stroke="#e09f3e" stroke-dasharray="1.5 2.5" stroke-width="1.8"
+                opacity="0.7" />
+              <circle cx="0" cy="0" r="8" fill="#3a1e05" />
+            </g>
+          </g>
+
+          <!-- Detalle de flores pequeñas (Baby's Breath) -->
+          <g id="babys-breath" fill="#fffef0">
+            <circle cx="190" cy="140" r="4" filter="drop-shadow(0 0 3px #ffd700)" />
+            <circle cx="210" cy="120" r="3.5" filter="drop-shadow(0 0 3px #ffd700)" />
+            <circle cx="310" cy="130" r="4" filter="drop-shadow(0 0 3px #ffd700)" />
+            <circle cx="280" cy="115" r="3" filter="drop-shadow(0 0 3px #ffd700)" />
+            <circle cx="110" cy="240" r="3.5" />
+            <circle cx="390" cy="240" r="4" />
+          </g>
+
+          <!-- ==================== ENVOLTORIO FRONTAL Y LAZO ==================== -->
+          <g id="wrapper-front" filter="url(#shadowFilter)">
+            <path d="M 120 330 L 250 540 L 235 370 Z" fill="url(#wrapGrad)" />
+            <path d="M 380 330 L 250 540 L 265 370 Z" fill="url(#wrapGrad)" />
+            <path d="M 150 350 Q 250 390 350 350 L 265 555 Q 250 565 235 555 Z" fill="url(#wrapGrad)" />
+            <path d="M 150 350 Q 250 380 350 350" stroke="#ffd89b" stroke-width="3" fill="none" opacity="0.8" />
+          </g>
+
+          <!-- Lazo y Cinta de Seda Dorada -->
+          <g id="ribbon" filter="url(#shadowFilter)">
+            <path d="M 235 440 Q 200 480 215 540 Q 225 500 240 450 Z" fill="url(#ribbonGrad)" />
+            <path d="M 265 440 Q 300 480 285 540 Q 275 500 260 450 Z" fill="url(#ribbonGrad)" />
+            <circle cx="250" cy="435" r="13" fill="#ffb703" stroke="#ffd60a" stroke-width="2" />
+            <path d="M 245 435 C 190 405 185 455 240 440 Z" fill="url(#ribbonGrad)" />
+            <path d="M 255 435 C 310 405 315 455 260 440 Z" fill="url(#ribbonGrad)" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Chip animado para guiar interacción -->
+      <div class="bouquet-hint-chip" id="bouquet-hint">
+        <span>✨</span> Toca las flores del ramo <span>👆</span>
+      </div>
+    </section>
+
+    <!-- Botones de Acción (Poema y Lluvia de pétalos) -->
+    <section class="actions-grid">
+      <button class="btn-action-primary" id="btn-open-poem">
+        <span>📜</span>
+        <span>Leer Carta & Poema Especial</span>
+        <span>💌</span>
+      </button>
+
+      <button class="btn-action-secondary" id="btn-petal-burst">
+        <span>🌸</span>
+        <span>Lluvia de Pétalos</span>
+      </button>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       3. MODAL DE LA CARTA Y POEMA ESPECIAL
+       ========================================================================== -->
+  <div class="letter-modal-overlay" id="letter-modal">
+    <div class="parchment-card">
+      <button class="modal-close-btn" id="btn-close-poem" title="Cerrar carta">&times;</button>
+
+      <div class="letter-stamp">
+        <div class="wax-seal">🌻</div>
+      </div>
+
+      <div class="letter-header">
+        <h2 class="letter-salutation">Para Ivana</h2>
+        <div class="letter-date">21 de Septiembre · Día de las Flores Amarillas</div>
+      </div>
+
+      <div class="poem-body">
+        <div class="poem-stanza">
+          Sé que ha habido un silencio entre los dos<br>
+          y que los días siguieron su curso natural,<br>
+          pero hoy es una fecha especial<br>
+          y no quería dejarla pasar.
+        </div>
+
+        <div class="poem-stanza">
+          Dicen que las flores amarillas<br>
+          son para desear alegría, luz y calidez,<br>
+          y me pareció un lindo detalle<br>
+          hacerte llegar este gesto otra vez.
+        </div>
+
+        <div class="poem-stanza">
+          Aunque apenas nos estábamos conociendo,<br>
+          me quedó el recuerdo de tu buena energía,<br>
+          y simplemente quise que hoy<br>
+          te sumara una sonrisa a tu día.
+        </div>
+
+        <div class="poem-stanza">
+          Sin compromisos, solo con aprecio sincero:<br>
+          que nunca te falten motivos para sonreír,<br>
+          y que te sobren momentos bonitos por vivir. 🌻💛
+        </div>
+      </div>
+
+      <div class="letter-footer">
+        <div class="letter-signature">Con aprecio sincero ✨</div>
+        <button class="btn-letter-heart" id="btn-modal-burst">
+          <span>💛</span> Desearle un bonito día
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje flotante Toast -->
+  <div class="floating-toast" id="toast-message">✨ ¡Detalle enviado con cariño! 💛</div>
+
+  <!-- Contenedor del reproductor de YouTube oficial -->
+  <div id="yt-audio-container">
+    <div id="yt-player"></div>
+  </div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT: LÓGICA COMPLETA DE ANIMACIONES, AUDIO Y PARTICULAS
+       ========================================================================== -->
+  <script>
+    /* ==========================================================================
+       1. SISTEMA DE AUDIO (YOUTUBE API + AUTO-REPRODUCCIÓN Y DETECCIÓN DE SALIDA)
+       ========================================================================== */
+    const YOUTUBE_VIDEO_ID = 'gv63CGCx6vg'; // Enlace indicado por el usuario
+    let ytPlayer = null;
+    let isPlaying = false;
+    let playerReady = false;
+    let shouldAutoPlayOnReady = false;
+    let audioContext = null;
+
+    function initAudioContext() {
+      if (!audioContext) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) audioContext = new AudioCtx();
+      }
+      if (audioContext && audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+    }
+
+    // Tono mágico sintético al tocar flores o abrir carta
+    function playMagicChime(frequency = 587.33, type = 'sine') {
+      try {
+        initAudioContext();
+        if (!audioContext) return;
+
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(frequency, audioContext.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(frequency * 1.5, audioContext.currentTime + 0.35);
+
+        gain.gain.setValueAtTime(0.2, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.7);
+
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+
+        osc.start();
+        osc.stop(audioContext.currentTime + 0.7);
+      } catch (e) {
+        // Silencioso si no está habilitado
+      }
+    }
+
+    function playWelcomeArpeggio() {
+      const notes = [523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((freq, index) => {
+        setTimeout(() => {
+          playMagicChime(freq, 'triangle');
+        }, index * 120);
+      });
+    }
+
+    // Carga de la API de YouTube
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    window.onYouTubeIframeAPIReady = function () {
+      ytPlayer = new YT.Player('yt-player', {
+        height: '240',
+        width: '240',
+        videoId: YOUTUBE_VIDEO_ID,
+        playerVars: {
+          'autoplay': 0,
+          'controls': 0,
+          'disablekb': 1,
+          'fs': 0,
+          'loop': 1,
+          'playlist': YOUTUBE_VIDEO_ID,
+          'modestbranding': 1,
+          'rel': 0,
+          'playsinline': 1,
+          'enablejsapi': 1
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    };
+
+    function onPlayerReady(event) {
+      playerReady = true;
+      try {
+        ytPlayer.setVolume(90);
+      } catch (e) { }
+
+      if (shouldAutoPlayOnReady) {
+        startMusicPlayback();
+      }
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.PLAYING) {
+        updatePlayerUI(true);
+      } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+        updatePlayerUI(false);
+      }
+    }
+
+    function startMusicPlayback() {
+      if (playerReady && ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        ytPlayer.playVideo();
+        updatePlayerUI(true);
+      } else {
+        shouldAutoPlayOnReady = true;
+      }
+    }
+
+    function stopMusicPlayback() {
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        ytPlayer.pauseVideo();
+        updatePlayerUI(false);
+      }
+    }
+
+    function togglePlayMusic() {
+      initAudioContext();
+      if (!playerReady || !ytPlayer || typeof ytPlayer.getPlayerState !== 'function') {
+        showToast('Cargando canción especial... ✨');
+        shouldAutoPlayOnReady = true;
+        return;
+      }
+
+      if (isPlaying) {
+        stopMusicPlayback();
+      } else {
+        startMusicPlayback();
+      }
+    }
+
+    function updatePlayerUI(playing) {
+      isPlaying = playing;
+      const vinyl = document.getElementById('vinyl-disc');
+      const eq = document.getElementById('equalizer-bars');
+      const iconPlay = document.getElementById('icon-play');
+      const iconPause = document.getElementById('icon-pause');
+
+      if (playing) {
+        vinyl.classList.add('playing');
+        eq.classList.add('playing');
+        iconPlay.style.display = 'none';
+        iconPause.style.display = 'block';
+      } else {
+        vinyl.classList.remove('playing');
+        eq.classList.remove('playing');
+        iconPlay.style.display = 'block';
+        iconPause.style.display = 'none';
+      }
+    }
+
+    // =========================================================================
+    // CORTAR LA MÚSICA AL SALIR (Al cambiar de pestaña o cerrar ventana)
+    // =========================================================================
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopMusicPlayback();
+      }
+    });
+
+    window.addEventListener('pagehide', () => {
+      stopMusicPlayback();
+    });
+
+    window.addEventListener('beforeunload', () => {
+      stopMusicPlayback();
+    });
+
+    /* ==========================================================================
+       2. CANVAS DE PÉTALOS FLOTANTES Y LUCIÉRNAGAS
+       ========================================================================== */
+    const canvas = document.getElementById('petals-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    class Petal {
+      constructor(isBurst = false) {
+        this.reset(isBurst);
+      }
+
+      reset(isBurst = false) {
+        if (isBurst) {
+          this.x = width / 2 + (Math.random() - 0.5) * 80;
+          this.y = height / 2 + (Math.random() - 0.5) * 80;
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 8 + 4;
+          this.vx = Math.cos(angle) * speed;
+          this.vy = Math.sin(angle) * speed - 2;
+        } else {
+          this.x = Math.random() * width;
+          this.y = -30 - Math.random() * 100;
+          this.vx = Math.random() * 1.5 - 0.75;
+          this.vy = Math.random() * 1.6 + 0.9;
+        }
+
+        this.size = Math.random() * 14 + 10;
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = Math.random() * 2.5 - 1.25;
+        this.swingAngle = Math.random() * Math.PI * 2;
+        this.swingSpeed = Math.random() * 0.03 + 0.01;
+        this.opacity = Math.random() * 0.4 + 0.6;
+        this.colorHue = Math.floor(Math.random() * 15 + 43); // tonos dorados (43 - 58)
+        this.aspect = Math.random() * 0.4 + 0.5;
+      }
+
+      update() {
+        this.swingAngle += this.swingSpeed;
+        this.x += this.vx + Math.sin(this.swingAngle) * 1.2;
+        this.y += this.vy;
+        this.rotation += this.rotationSpeed;
+        this.aspect = Math.sin(this.swingAngle * 1.5);
+
+        if (this.y > height + 40 || this.x < -40 || this.x > width + 40) {
+          this.reset();
+        }
+      }
+
+      draw(ctx) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.scale(1, Math.max(0.15, Math.abs(this.aspect)));
+
+        ctx.beginPath();
+        ctx.moveTo(0, -this.size);
+        ctx.bezierCurveTo(this.size * 0.8, -this.size * 0.6, this.size * 0.8, this.size * 0.6, 0, this.size);
+        ctx.bezierCurveTo(-this.size * 0.8, this.size * 0.6, -this.size * 0.8, -this.size * 0.6, 0, -this.size);
+        ctx.closePath();
+
+        const grad = ctx.createLinearGradient(0, -this.size, 0, this.size);
+        grad.addColorStop(0, `hsla(${this.colorHue + 5}, 100%, 75%, ${this.opacity})`);
+        grad.addColorStop(0.6, `hsla(${this.colorHue}, 100%, 55%, ${this.opacity})`);
+        grad.addColorStop(1, `hsla(${this.colorHue - 5}, 100%, 45%, ${this.opacity})`);
+
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        ctx.strokeStyle = `hsla(${this.colorHue + 10}, 100%, 85%, ${this.opacity * 0.6})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+
+        ctx.restore();
+      }
+    }
+
+    // Luciérnagas / polen dorado
+    class Firefly {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 2.5 + 1;
+        this.vx = Math.random() * 0.8 - 0.4;
+        this.vy = Math.random() * 0.8 - 0.4;
+        this.alpha = Math.random();
+        this.alphaSpeed = Math.random() * 0.02 + 0.01;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha += this.alphaSpeed;
+
+        if (this.alpha > 1 || this.alpha < 0.1) {
+          this.alphaSpeed = -this.alphaSpeed;
+        }
+
+        if (this.x < 0) this.x = width;
+        if (this.x > width) this.x = 0;
+        if (this.y < 0) this.y = height;
+        if (this.y > height) this.y = 0;
+      }
+
+      draw(ctx) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 220, 50, ${this.alpha})`;
+        ctx.shadowColor = '#ffd700';
+        ctx.shadowBlur = 10;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    const petals = [];
+    const fireflies = [];
+    const NUM_PETALS = 32;
+    const NUM_FIREFLIES = 22;
+
+    for (let i = 0; i < NUM_PETALS; i++) petals.push(new Petal());
+    for (let i = 0; i < NUM_FIREFLIES; i++) fireflies.push(new Firefly());
+
+    function burstPetals(count = 35) {
+      for (let i = 0; i < count; i++) {
+        petals.push(new Petal(true));
+      }
+      setTimeout(() => {
+        if (petals.length > NUM_PETALS) {
+          petals.splice(NUM_PETALS);
+        }
+      }, 7000);
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      fireflies.forEach(firefly => {
+        firefly.update();
+        firefly.draw(ctx);
+      });
+
+      petals.forEach(petal => {
+        petal.update();
+        petal.draw(ctx);
+      });
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    /* ==========================================================================
+       3. INTERACCIÓN DE ENTRADA ("HAZ CLIC AQUÍ")
+       ========================================================================== */
+    const curtain = document.getElementById('welcome-curtain');
+    const btnEnter = document.getElementById('btn-enter');
+    const giftBox = document.getElementById('gift-box');
+
+    function enterExperience() {
+      playWelcomeArpeggio();
+      burstPetals(45);
+
+      // Iniciar de inmediato la reproducción de la canción elegida
+      startMusicPlayback();
+
+      curtain.classList.add('hidden');
+      showToast('🌻 ¡Bienvenida a tu sorpresa amarilla, Ivana! ✨');
+    }
+
+    btnEnter.addEventListener('click', enterExperience);
+    giftBox.addEventListener('click', enterExperience);
+
+    /* ==========================================================================
+       4. INTERACTIVIDAD DEL RAMO DE FLORES AMARILLAS
+       ========================================================================== */
+    const flowerElements = document.querySelectorAll('.svg-flower-interactive');
+    const bubble = document.getElementById('flower-message-bubble');
+    const bubbleContent = document.getElementById('bubble-content');
+    let bubbleTimeout = null;
+
+    flowerElements.forEach((flower, index) => {
+      flower.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const message = flower.getAttribute('data-message') || '🌻 ¡Una flor amarilla para ti!';
+
+        playMagicChime(440 + index * 80, 'triangle');
+        burstPetals(14);
+
+        bubbleContent.textContent = message;
+        bubble.classList.add('active');
+
+        clearTimeout(bubbleTimeout);
+        bubbleTimeout = setTimeout(() => {
+          bubble.classList.remove('active');
+        }, 5000);
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!bubble.contains(e.target)) {
+        bubble.classList.remove('active');
+      }
+    });
+
+    /* ==========================================================================
+       5. BOTONES DE ACCIÓN Y MODAL DE LA CARTA
+       ========================================================================== */
+    const btnPlayPause = document.getElementById('btn-play-pause');
+    const btnOpenPoem = document.getElementById('btn-open-poem');
+    const btnClosePoem = document.getElementById('btn-close-poem');
+    const letterModal = document.getElementById('letter-modal');
+    const btnPetalBurst = document.getElementById('btn-petal-burst');
+    const btnModalBurst = document.getElementById('btn-modal-burst');
+    const toast = document.getElementById('toast-message');
+
+    // Control de música Play / Pause
+    btnPlayPause.addEventListener('click', togglePlayMusic);
+
+    // Modal de Poema
+    btnOpenPoem.addEventListener('click', () => {
+      playMagicChime(659.25, 'sine');
+      letterModal.classList.add('open');
+      burstPetals(22);
+    });
+
+    btnClosePoem.addEventListener('click', () => {
+      letterModal.classList.remove('open');
+    });
+
+    letterModal.addEventListener('click', (e) => {
+      if (e.target === letterModal) {
+        letterModal.classList.remove('open');
+      }
+    });
+
+    // Lluvia de flores manual
+    btnPetalBurst.addEventListener('click', () => {
+      playMagicChime(783.99, 'sine');
+      burstPetals(35);
+      showToast('🌻 ¡Lluvia de flores amarillas para ti! 💛');
+    });
+
+    btnModalBurst.addEventListener('click', () => {
+      playMagicChime(880.00, 'triangle');
+      burstPetals(40);
+      showToast('💛 ¡Deseo de corazón que tengas un día hermoso! ✨');
+    });
+
+    // Notificación Toast
+    let toastTimeout = null;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+  </script>
+</body>
+
+</html>
